@@ -13,7 +13,8 @@
                 <form method ="POST" action={{ route('idea.destroy',$idea->id) }}>
                     @csrf
                     @method('delete')
-                    <a href={{ route('idea.show', $idea->id) }} class="ms-1">View</a>
+                    <a href={{ route('idea.edit', $idea->id) }} class="mx-2">Edit</a>
+                    <a href={{ route('idea.show', $idea->id) }} class="mx-1">View</a>
                     <button class="btn btn-danger btn-sm">X</button>
                 </form>
                 
@@ -22,9 +23,13 @@
         </div>
     </div>
     <div class="card-body">
-        <p class="fs-6 fw-light text-muted">
-            {{ $idea->content }}
-        </p>
+        @if($editing ?? false)
+            @include('shared.edit_idea')
+        @else
+            <p class="fs-6 fw-light text-muted">
+                {{ $idea->content }}
+            </p>
+        @endif
         <div class="d-flex justify-content-between">
             <div>
                 <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-heart me-1">
