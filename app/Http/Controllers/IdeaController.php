@@ -36,6 +36,8 @@ class IdeaController extends Controller
         //     'idea' => $idea
         // ]);
 
+        // dd($idea->commnets);
+
         return view('ideas.show', compact('idea'));
     }
 

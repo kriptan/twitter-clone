@@ -18,4 +18,11 @@ class Idea extends Model
         'content',
         'likes',
     ];
+
+    // relationships
+    public function comments()
+    {
+        // return $this->hasMany(Comment::class,localKey,foreignKey); // if you are not using the same name for the table and the model
+        return $this->hasMany(Comment::class);
+    }
 }
