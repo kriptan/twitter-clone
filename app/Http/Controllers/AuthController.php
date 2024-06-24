@@ -8,12 +8,13 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function register(){
+    public function register()
+    {
         return view('auth.register');
     }
 
-    public function store(){
-
+    public function store()
+    {
         // In form if the password name is password, then confirm name is password_confirmation, in built in laravel it will check if both are same
         $validated = request()->validate([
             'name' =>'required|min:3|max:50',
@@ -28,5 +29,34 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('dashboard')->with('success', 'User created successfully.');
+    }
+
+    public function login()
+    {
+        return view('auth.login');
+    }
+
+    public function authenticate()
+    {
+        $validated = request()->validate([
+            'email' =>'required|email',
+            'password' => 'required|min:3|max:255',
+        ]);
+
+        if (auth()->attempt($validated)) {
+            // clear the sessions of previos user
+            request()->session()->regenerate();
+            return redirect()->route('dashboard')->with('success', 'User logged in successfully.');
+        } else {
+            return redirect()->route('login')->withErrors(['email' => 'The provided credentials do not match our records.']);
+        }
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('dashboard')->with('success', 'User logged out successfully.');
     }
 }
