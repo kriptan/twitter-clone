@@ -18,6 +18,8 @@ class IdeaController extends Controller
         //     'content' => request()->get('content', ''),
         // ]);
 
+        // get logged in user uderlying the request
+        $validated['user_id'] = auth()->id();
         Idea::create($validated);
 
         return redirect()->route('dashboard')->with('success', 'Idea created successfully');
@@ -28,6 +30,11 @@ class IdeaController extends Controller
         // Use ellquent
         // $idea = Idea::where('id', $idea->firstOrFail();
         // $idea->delete();
+
+        //only owner can delete
+        if (auth()->id()!== $idea->user_id) {
+            abort(404);
+        }
 
         $idea->delete();
         return redirect()->route('dashboard')->with('success', 'Idea deleted successfully');
@@ -47,12 +54,20 @@ class IdeaController extends Controller
 
     public function edit(Idea $idea)
     {
+        // Only owner can edit
+        if (auth()->id()!== $idea->user_id) {
+            abort(404);
+        }
+        
         $editing =true;
         return view('ideas.show', compact('idea', 'editing'));
     }
 
     public function update(Idea $idea)
     {
+        if (auth()->id()!== $idea->user_id) {
+            abort(404);
+        }
         $validated = request()->validate([
             'content' => 'required|min:5|max:240'
         ]);

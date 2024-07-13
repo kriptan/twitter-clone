@@ -27,6 +27,7 @@ class Idea extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'content',
         'likes',
     ];
@@ -36,5 +37,10 @@ class Idea extends Model
     {
         // return $this->hasMany(Comment::class,localKey,foreignKey); // if you are not using the same name for the table and the model
         return $this->hasMany(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
