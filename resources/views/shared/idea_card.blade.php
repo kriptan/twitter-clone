@@ -13,13 +13,17 @@
                 <form method ="POST" action={{ route('idea.destroy',$idea->id) }}>
                     @csrf
                     @method('delete')
-                    @if (auth()->user()->id == $idea->user_id)
-                        <a href={{ route('idea.edit', $idea->id) }} class="mx-2">Edit</a>  
-                    @endif                   
+                    @auth
+                        @if (auth()->user()->id == $idea->user_id)
+                            <a href={{ route('idea.edit', $idea->id) }} class="mx-2">Edit</a>  
+                        @endif
+                    @endauth                 
                     <a href={{ route('idea.show', $idea->id) }} class="mx-1">View</a>
-                    @if (auth()->user()->id == $idea->user_id)
-                        <button class="btn btn-danger btn-sm">X</button>
-                    @endif   
+                    @auth
+                        @if (auth()->user()->id == $idea->user_id)
+                            <button class="btn btn-danger btn-sm">X</button>
+                        @endif
+                    @endauth   
                 </form>
                 
                 
