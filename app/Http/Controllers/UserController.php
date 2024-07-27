@@ -52,7 +52,7 @@ class UserController extends Controller
              * This is called when updating the user's profile, if a new image is provided.
              * The previous image is deleted to free up disk space.
              */
-            Storage::disk('public')->delete($user->image);
+            Storage::disk('public')->delete($user->image ?? '');
         }
 
         $user->update($validated);
