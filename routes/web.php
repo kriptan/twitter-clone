@@ -16,6 +16,6 @@ Route::resource('idea.comments', CommentController::class)->only(['store'])->mid
 
 Route::resource('users', UserController::class)->only(['show', 'edit', 'update'])->middleware('auth');
 
-
+Route::get('profile', [UserController::class,'profile'])->name('profile')->middleware('auth');
 // https://laravel.com/docs/11.x/controllers#actions-handled-by-resource-controllers
  
