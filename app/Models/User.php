@@ -57,6 +57,34 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class)->latest();
     }
 
+    // People who we follow
+    // follower_id = our id
+    // user_id = followed users id
+    public function followings()
+    {
+        // belongsToMany(related, table, foreignPivotKey, relatedPivotKey, parentKey, relatedKey, relation)
+        return $this->belongsToMany(User::class, 'follower_user', 'follower_id', 'user_id')->withTimestamps();
+    }
+
+    // People who follow us
+    public function followers()
+    {
+       // beloongsToMany(related, table, foreignPivotKey, relatedPivotKey, parentKey, relatedKey, relation)
+        return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id')->withTimestamps();
+    }
+
+    /**
+     * Checks if the current user is following the given user.
+     *
+     * @param \App\Models\User $user The user to check if the current user is following.
+     * @return bool True if the current user is following the given user, false otherwise.
+     */
+    public function follows(User $user)
+    {
+        return $this->followings()->where('user_id', $user->id)->exists();
+    }
+
+
     public function getImageUrl()
     {
         
