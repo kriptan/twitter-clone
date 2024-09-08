@@ -10,16 +10,16 @@ data-bs-theme="dark">
         <ul class="navbar-nav">
             @guest
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Login</a>
+                    <a class="nav-link {{ Route::is('login') ? 'active' : '' }}" aria-current="page" href="{{ route('login') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    <a class="nav-link {{ Route::is('register') ? 'active' : '' }}" href="{{ route('register') }}">Register</a>
                 </li>
             @endguest
 
             @auth()
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile') }}">{{ Auth::user()->name }}</a>
+                    <a class="nav-link {{ Route::is('profile') ? 'active' : '' }}" href="{{ route('profile') }}">{{ Auth::user()->name }}</a>
                 </li>
                 <li class="nav-item">
                    {{-- Logout form --}}
