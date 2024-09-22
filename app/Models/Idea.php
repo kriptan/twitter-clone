@@ -20,6 +20,12 @@ class Idea extends Model
         'updated_at',
     ];
 
+    /**
+     * The relationships that should be eager loaded.
+     *
+     * @var array
+     */
+    protected $with = ['user:id,name,image','comments.user:id,name,image'];
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +35,6 @@ class Idea extends Model
     protected $fillable = [
         'user_id',
         'content',
-        'likes',
     ];
 
     // relationships
@@ -42,5 +47,15 @@ class Idea extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the users that have liked this idea.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'idea_like')->withTimestamps();
     }
 }

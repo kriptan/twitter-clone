@@ -8,12 +8,12 @@
         @include('shared.success_message')
         <div class="mt-3">
             {{-- users profile --}}
-            @include('shared.user_edit')
+            @include('users.shared.user_edit')
         </div>
         <hr>
         @forelse($ideas as $idea)
             <div class="mt-3">
-                @include('shared.idea_card')
+                @include('ideas.shared.idea_card')
             </div>
         @empty
         <p class="text-center mt-4"> No Ideas Found </p>
