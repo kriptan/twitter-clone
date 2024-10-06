@@ -8,6 +8,7 @@ use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IdeaLikeController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/terms', function () {
@@ -31,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('idea', IdeaController::class)->only(['show']);
 Route::resource('users', UserController::class)->only(['show']);
+
+// Admin 
+Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware(['auth', 'admin']);
 
 
 // https://laravel.com/docs/11.x/controllers#actions-handled-by-resource-controllers
